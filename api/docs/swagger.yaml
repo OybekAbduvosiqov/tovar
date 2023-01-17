@@ -1,0 +1,238 @@
+definitions:
+  models.Category1:
+    properties:
+      id:
+        type: string
+    type: object
+  models.CreateTovar:
+    properties:
+      category_ids:
+        items:
+          type: string
+        type: array
+      description:
+        type: string
+      name:
+        type: string
+      photo:
+        type: string
+      price:
+        type: number
+    type: object
+  models.Empty:
+    type: object
+  models.GetListTovarResponse:
+    properties:
+      count:
+        type: integer
+      tovars:
+        items:
+          $ref: '#/definitions/models.UpdateTovar'
+        type: array
+    type: object
+  models.Tovar:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/models.Category1'
+        type: array
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      photo:
+        type: string
+      price:
+        type: number
+      updated_at:
+        type: string
+    type: object
+  models.UpdateTovar:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      photo:
+        type: string
+      price:
+        type: number
+    type: object
+  models.UpdateTovarSwag:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      photo:
+        type: string
+      price:
+        type: number
+    type: object
+info:
+  contact: {}
+paths:
+  /tovar:
+    get:
+      consumes:
+      - application/json
+      description: Get List Tovar
+      operationId: TovarPrimeryKey
+      parameters:
+      - description: offset
+        in: query
+        name: offset
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetTovarListBody
+          schema:
+            $ref: '#/definitions/models.GetListTovarResponse'
+        "400":
+          description: Invalid Argumant
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: Get List Tovar
+      tags:
+      - Tovar
+    post:
+      consumes:
+      - application/json
+      description: CreateTovar
+      operationId: CreateTovar
+      parameters:
+      - description: CreateTovarRequestBody
+        in: body
+        name: tovar
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateTovar'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: GetTovarBody
+          schema:
+            $ref: '#/definitions/models.Tovar'
+        "400":
+          description: Invalid Argumant
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: CreateTovar
+      tags:
+      - Tovar
+  /tovar/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Tovar
+      operationId: DeleteTovar
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: DeleteTovarBody
+          schema:
+            $ref: '#/definitions/models.Empty'
+        "400":
+          description: Invalid Argumant
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: Delete Tovar
+      tags:
+      - Tovar
+    get:
+      consumes:
+      - application/json
+      description: GetByID Tovar
+      operationId: Get_By_IDTovar
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: GetByIDTovarBody
+          schema:
+            $ref: '#/definitions/models.Tovar'
+        "400":
+          description: Invalid Argumant
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: GetByID Tovar
+      tags:
+      - Tovar
+    put:
+      consumes:
+      - application/json
+      description: Update Tovar
+      operationId: UpdateTovar
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: UpdateTovarRequestBody
+        in: body
+        name: tovar
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateTovarSwag'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: UpdateTovarBody
+          schema:
+            $ref: '#/definitions/models.Tovar'
+        "400":
+          description: Invalid Argumant
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: Update Tovar
+      tags:
+      - Tovar
+swagger: "2.0"
