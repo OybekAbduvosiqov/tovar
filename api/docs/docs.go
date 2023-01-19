@@ -16,9 +16,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/tovar": {
+        "/category": {
             "get": {
-                "description": "Get List Tovar",
+                "description": "Get List Category",
                 "consumes": [
                     "application/json"
                 ],
@@ -26,10 +26,10 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Tovar"
+                    "Category"
                 ],
-                "summary": "Get List Tovar",
-                "operationId": "TovarPrimeryKey",
+                "summary": "Get List Category",
+                "operationId": "get_list_category",
                 "parameters": [
                     {
                         "type": "integer",
@@ -42,13 +42,19 @@ const docTemplate = `{
                         "description": "limit",
                         "name": "limit",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "search",
+                        "name": "search",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "GetTovarListBody",
+                        "description": "GetCategoryListBody",
                         "schema": {
-                            "$ref": "#/definitions/models.GetListTovarResponse"
+                            "$ref": "#/definitions/models.GetListCategoryResponse"
                         }
                     },
                     "400": {
@@ -66,7 +72,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "CreateTovar",
+                "description": "Create Category",
                 "consumes": [
                     "application/json"
                 ],
@@ -74,26 +80,26 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Tovar"
+                    "Category"
                 ],
-                "summary": "CreateTovar",
-                "operationId": "CreateTovar",
+                "summary": "Create Category",
+                "operationId": "create_category",
                 "parameters": [
                     {
-                        "description": "CreateTovarRequestBody",
-                        "name": "tovar",
+                        "description": "CreateCategoryRequestBody",
+                        "name": "category",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.CreateTovar"
+                            "$ref": "#/definitions/models.CreateCategory"
                         }
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "GetTovarBody",
+                        "description": "GetCategoryBody",
                         "schema": {
-                            "$ref": "#/definitions/models.Tovar"
+                            "$ref": "#/definitions/models.Category"
                         }
                     },
                     "400": {
@@ -111,9 +117,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/tovar/{id}": {
+        "/category/{id}": {
             "get": {
-                "description": "GetByID Tovar",
+                "description": "Get By ID Category",
                 "consumes": [
                     "application/json"
                 ],
@@ -121,10 +127,10 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Tovar"
+                    "Category"
                 ],
-                "summary": "GetByID Tovar",
-                "operationId": "Get_By_IDTovar",
+                "summary": "Get By ID Category",
+                "operationId": "get_by_id_category",
                 "parameters": [
                     {
                         "type": "string",
@@ -135,10 +141,10 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "201": {
-                        "description": "GetByIDTovarBody",
+                    "200": {
+                        "description": "GetCategoryBody",
                         "schema": {
-                            "$ref": "#/definitions/models.Tovar"
+                            "$ref": "#/definitions/models.Category"
                         }
                     },
                     "400": {
@@ -156,7 +162,7 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "Update Tovar",
+                "description": "Update Category",
                 "consumes": [
                     "application/json"
                 ],
@@ -164,10 +170,10 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Tovar"
+                    "Category"
                 ],
-                "summary": "Update Tovar",
-                "operationId": "UpdateTovar",
+                "summary": "Update Category",
+                "operationId": "update_category",
                 "parameters": [
                     {
                         "type": "string",
@@ -177,20 +183,20 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "UpdateTovarRequestBody",
-                        "name": "tovar",
+                        "description": "UpdateCategoryRequestBody",
+                        "name": "category",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.UpdateTovarSwag"
+                            "$ref": "#/definitions/models.UpdateCategoryPut"
                         }
                     }
                 ],
                 "responses": {
                     "202": {
-                        "description": "UpdateTovarBody",
+                        "description": "UpdateCategoryBody",
                         "schema": {
-                            "$ref": "#/definitions/models.Tovar"
+                            "$ref": "#/definitions/models.Category"
                         }
                     },
                     "400": {
@@ -208,7 +214,7 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Delete Tovar",
+                "description": "Delete Category",
                 "consumes": [
                     "application/json"
                 ],
@@ -216,10 +222,10 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Tovar"
+                    "Category"
                 ],
-                "summary": "Delete Tovar",
-                "operationId": "DeleteTovar",
+                "summary": "Delete Category",
+                "operationId": "delete_category",
                 "parameters": [
                     {
                         "type": "string",
@@ -231,7 +237,248 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "204": {
-                        "description": "DeleteTovarBody",
+                        "description": "DeleteCategoryBody",
+                        "schema": {
+                            "$ref": "#/definitions/models.Empty"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Argumant",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/product": {
+            "get": {
+                "description": "Get List product",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get List Product",
+                "operationId": "ProductPrimeryKey",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "search",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GetProdctListBody",
+                        "schema": {
+                            "$ref": "#/definitions/models.GetListProductResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Argumant",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "CreateProduct",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "CreateProduct",
+                "operationId": "CreateProduct",
+                "parameters": [
+                    {
+                        "description": "CreateProductRequestBody",
+                        "name": "product",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.CreateProduct"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "GetProductBody",
+                        "schema": {
+                            "$ref": "#/definitions/models.CreateProduct"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Argumant",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/product/{id}": {
+            "get": {
+                "description": "GetByID Product",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "GetByID Product",
+                "operationId": "Get_By_IDProduct",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "GetByIDProductBody",
+                        "schema": {
+                            "$ref": "#/definitions/models.Product"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Argumant",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update Product",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Update Product",
+                "operationId": "UpdateProduct",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "UpdateProductRequestBody",
+                        "name": "product",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UpdateProductPut"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "UpdateProductBody",
+                        "schema": {
+                            "$ref": "#/definitions/models.Product"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Argumant",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Product",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete Product",
+                "operationId": "DeleteProduct",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "DeleteProductBody",
                         "schema": {
                             "$ref": "#/definitions/models.Empty"
                         }
@@ -253,22 +500,83 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "models.Category1": {
+        "models.Category": {
             "type": "object",
             "properties": {
+                "created_at": {
+                    "type": "string"
+                },
                 "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.CategoryPrduct"
+                    }
+                },
+                "updated_at": {
                     "type": "string"
                 }
             }
         },
-        "models.CreateTovar": {
+        "models.CategoryPrduct": {
             "type": "object",
             "properties": {
-                "category_ids": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "string"
+                },
+                "type_id": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CreateCategory": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "string"
+                },
+                "type_id": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CreateProduct": {
+            "type": "object",
+            "properties": {
+                "category_id": {
+                    "type": "string"
                 },
                 "description": {
                     "type": "string"
@@ -287,28 +595,39 @@ const docTemplate = `{
         "models.Empty": {
             "type": "object"
         },
-        "models.GetListTovarResponse": {
-            "type": "object",
-            "properties": {
-                "count": {
-                    "type": "integer"
-                },
-                "tovars": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.UpdateTovar"
-                    }
-                }
-            }
-        },
-        "models.Tovar": {
+        "models.GetListCategoryResponse": {
             "type": "object",
             "properties": {
                 "categories": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.Category1"
+                        "$ref": "#/definitions/models.CreateCategory"
                     }
+                },
+                "count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.GetListProductResponse": {
+            "type": "object",
+            "properties": {
+                "books": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Productlist"
+                    }
+                },
+                "count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Product": {
+            "type": "object",
+            "properties": {
+                "category_id": {
+                    "$ref": "#/definitions/models.CategoryPrduct"
                 },
                 "created_at": {
                     "type": "string"
@@ -333,9 +652,12 @@ const docTemplate = `{
                 }
             }
         },
-        "models.UpdateTovar": {
+        "models.Productlist": {
             "type": "object",
             "properties": {
+                "created_at": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -350,12 +672,32 @@ const docTemplate = `{
                 },
                 "price": {
                     "type": "number"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         },
-        "models.UpdateTovarSwag": {
+        "models.UpdateCategoryPut": {
             "type": "object",
             "properties": {
+                "category_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.UpdateProductPut": {
+            "type": "object",
+            "properties": {
+                "category_id": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },

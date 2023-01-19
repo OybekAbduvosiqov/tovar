@@ -1,59 +1,58 @@
 package models
 
-type TovarPrimeryKey struct {
+type ProductPrimeryKey struct {
 	Id string `json:"id"`
 }
-
-type CreateTovar struct {
-	Name        string   `json:"name"`
-	Description string   `json:"description"`
-	Price       float64  `json:"price"`
-	Photo       string   `json:"photo"`
-	CategoryIds []string `json:"category_ids"`
+type Product struct {
+	Id          string         `json:"id"`
+	Name        string         `json:"name"`
+	Price       float64        `json:"price"`
+	Description string         `json:"description"`
+	Photo       string         `json:"photo"`
+	CategoryId  CategoryPrduct `json:"category_id"`
+	CreatedAt   string         `json:"created_at"`
+	UpdatedAt   string         `json:"updated_at"`
 }
-type CategoryTovar struct {
+type Productlist struct {
 	Id          string  `json:"id"`
 	Name        string  `json:"name"`
-	Description string  `json:"description"`
 	Price       float64 `json:"price"`
+	Description string  `json:"description"`
 	Photo       string  `json:"photo"`
 	CreatedAt   string  `json:"created_at"`
 	UpdatedAt   string  `json:"updated_at"`
 }
-type Tovar struct {
-	Id          string       `json:"id"`
-	Name        string       `json:"name"`
-	Description string       `json:"description"`
-	Price       float64      `json:"price"`
-	Photo       string       `json:"photo"`
-	CreatedAt   string       `json:"created_at"`
-	UpdatedAt   string       `json:"updated_at"`
-	Categories  []*Category1 `json:"categories"`
+
+type CreateProduct struct {
+	Name        string  `json:"name"`
+	Price       float64 `json:"price"`
+	Description string  `json:"description"`
+	Photo       string  `json:"photo"`
+	CategoryId  string  `json:"category_id"`
 }
 
-type UpdateTovar struct {
+type GetListProductRequest struct {
+	Offset int64  `json:"offset"`
+	Limit  int64  `json:"limit"`
+	Search string `json:"search"`
+}
+
+type GetListProductResponse struct {
+	Count    int64          `json:"count"`
+	Products []*Productlist `json:"books"`
+}
+type UpdateProduct struct {
 	Id          string  `json:"id"`
 	Name        string  `json:"name"`
-	Description string  `json:"description"`
 	Price       float64 `json:"price"`
+	Description string  `json:"description"`
 	Photo       string  `json:"photo"`
+	CategoryId  string  `json:"category_id"`
 }
-
-type UpdateTovarSwag struct {
+type UpdateProductPut struct {
 	Name        string  `json:"name"`
-	Description string  `json:"description"`
 	Price       float64 `json:"price"`
+	Description string  `json:"description"`
 	Photo       string  `json:"photo"`
+	CategoryId  string  `json:"category_id"`
 }
-
-type GetListTovarRequest struct {
-	Offset int64 `json:"offset"`
-	Limit  int64 `json:"limit"`
-}
-
-type GetListTovarResponse struct {
-	Count  int64          `json:"count"`
-	Tovars []*UpdateTovar `json:"tovars"`
-}
-
-type Empty struct{}

@@ -11,9 +11,9 @@ import (
 )
 
 type Store struct {
-	db    *pgxpool.Pool
-	tovar *TovarRepo
-	// category *CategoryRepo
+	db       *pgxpool.Pool
+	product  *ProductRepo
+	category *CategoryRepo
 }
 
 func NewPostgres(ctx context.Context, cfg config.Config) (storage.StorageI, error) {
@@ -30,7 +30,6 @@ func NewPostgres(ctx context.Context, cfg config.Config) (storage.StorageI, erro
 	if err != nil {
 		return nil, err
 	}
-
 	config.MaxConns = cfg.PostgresMaxConn
 
 	pool, err := pgxpool.ConnectConfig(ctx, config)
@@ -40,9 +39,9 @@ func NewPostgres(ctx context.Context, cfg config.Config) (storage.StorageI, erro
 	}
 
 	return &Store{
-		db:    pool,
-		tovar: NewTovarRepo(pool),
-		// category: NewCategoryRepo(pool),
+		db:       pool,
+		product:  NewProductRepo(pool),
+		category: NewCategoryRepo(pool),
 	}, nil
 }
 
@@ -50,20 +49,20 @@ func (s *Store) CloseDB() {
 	s.db.Close()
 }
 
-func (s *Store) Tovar() storage.TovarRepoI {
+func (s *Store) Product() storage.ProductRepoI {
 
-	if s.tovar == nil {
-		s.tovar = NewTovarRepo(s.db)
+	if s.product == nil {
+		s.product = NewProductRepo(s.db)
 	}
 
-	return s.tovar
+	return s.product
 }
 
-// func (s *Store) Category() storage.CategoryRepoI {
+func (s *Store) Category() storage.CategoryRepoI {
 
-// 	if s.category == nil {
-// 		s.category = NewCategoryRepo(s.db)
-// 	}
+	if s.category == nil {
+		s.category = NewCategoryRepo(s.db)
+	}
 
-// 	return s.category
-// }
+	return s.category
+}

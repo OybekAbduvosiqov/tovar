@@ -1,15 +1,55 @@
 definitions:
-  models.Category1:
+  models.Category:
     properties:
+      created_at:
+        type: string
       id:
         type: string
-    type: object
-  models.CreateTovar:
-    properties:
-      category_ids:
+      name:
+        type: string
+      photo:
+        type: string
+      type:
         items:
-          type: string
+          $ref: '#/definitions/models.CategoryPrduct'
         type: array
+      updated_at:
+        type: string
+    type: object
+  models.CategoryPrduct:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      photo:
+        type: string
+      type_id:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.CreateCategory:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      photo:
+        type: string
+      type_id:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.CreateProduct:
+    properties:
+      category_id:
+        type: string
       description:
         type: string
       name:
@@ -21,21 +61,28 @@ definitions:
     type: object
   models.Empty:
     type: object
-  models.GetListTovarResponse:
-    properties:
-      count:
-        type: integer
-      tovars:
-        items:
-          $ref: '#/definitions/models.UpdateTovar'
-        type: array
-    type: object
-  models.Tovar:
+  models.GetListCategoryResponse:
     properties:
       categories:
         items:
-          $ref: '#/definitions/models.Category1'
+          $ref: '#/definitions/models.CreateCategory'
         type: array
+      count:
+        type: integer
+    type: object
+  models.GetListProductResponse:
+    properties:
+      books:
+        items:
+          $ref: '#/definitions/models.Productlist'
+        type: array
+      count:
+        type: integer
+    type: object
+  models.Product:
+    properties:
+      category_id:
+        $ref: '#/definitions/models.CategoryPrduct'
       created_at:
         type: string
       description:
@@ -51,8 +98,10 @@ definitions:
       updated_at:
         type: string
     type: object
-  models.UpdateTovar:
+  models.Productlist:
     properties:
+      created_at:
+        type: string
       description:
         type: string
       id:
@@ -63,9 +112,22 @@ definitions:
         type: string
       price:
         type: number
+      updated_at:
+        type: string
     type: object
-  models.UpdateTovarSwag:
+  models.UpdateCategoryPut:
     properties:
+      category_id:
+        type: string
+      name:
+        type: string
+      photo:
+        type: string
+    type: object
+  models.UpdateProductPut:
+    properties:
+      category_id:
+        type: string
       description:
         type: string
       name:
@@ -78,12 +140,12 @@ definitions:
 info:
   contact: {}
 paths:
-  /tovar:
+  /category:
     get:
       consumes:
       - application/json
-      description: Get List Tovar
-      operationId: TovarPrimeryKey
+      description: Get List Category
+      operationId: get_list_category
       parameters:
       - description: offset
         in: query
@@ -93,13 +155,17 @@ paths:
         in: query
         name: limit
         type: integer
+      - description: search
+        in: query
+        name: search
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: GetTovarListBody
+          description: GetCategoryListBody
           schema:
-            $ref: '#/definitions/models.GetListTovarResponse'
+            $ref: '#/definitions/models.GetListCategoryResponse'
         "400":
           description: Invalid Argumant
           schema:
@@ -108,28 +174,28 @@ paths:
           description: Server error
           schema:
             type: string
-      summary: Get List Tovar
+      summary: Get List Category
       tags:
-      - Tovar
+      - Category
     post:
       consumes:
       - application/json
-      description: CreateTovar
-      operationId: CreateTovar
+      description: Create Category
+      operationId: create_category
       parameters:
-      - description: CreateTovarRequestBody
+      - description: CreateCategoryRequestBody
         in: body
-        name: tovar
+        name: category
         required: true
         schema:
-          $ref: '#/definitions/models.CreateTovar'
+          $ref: '#/definitions/models.CreateCategory'
       produces:
       - application/json
       responses:
         "201":
-          description: GetTovarBody
+          description: GetCategoryBody
           schema:
-            $ref: '#/definitions/models.Tovar'
+            $ref: '#/definitions/models.Category'
         "400":
           description: Invalid Argumant
           schema:
@@ -138,15 +204,15 @@ paths:
           description: Server error
           schema:
             type: string
-      summary: CreateTovar
+      summary: Create Category
       tags:
-      - Tovar
-  /tovar/{id}:
+      - Category
+  /category/{id}:
     delete:
       consumes:
       - application/json
-      description: Delete Tovar
-      operationId: DeleteTovar
+      description: Delete Category
+      operationId: delete_category
       parameters:
       - description: id
         in: path
@@ -157,7 +223,7 @@ paths:
       - application/json
       responses:
         "204":
-          description: DeleteTovarBody
+          description: DeleteCategoryBody
           schema:
             $ref: '#/definitions/models.Empty'
         "400":
@@ -168,14 +234,175 @@ paths:
           description: Server error
           schema:
             type: string
-      summary: Delete Tovar
+      summary: Delete Category
       tags:
-      - Tovar
+      - Category
     get:
       consumes:
       - application/json
-      description: GetByID Tovar
-      operationId: Get_By_IDTovar
+      description: Get By ID Category
+      operationId: get_by_id_category
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetCategoryBody
+          schema:
+            $ref: '#/definitions/models.Category'
+        "400":
+          description: Invalid Argumant
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: Get By ID Category
+      tags:
+      - Category
+    put:
+      consumes:
+      - application/json
+      description: Update Category
+      operationId: update_category
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: UpdateCategoryRequestBody
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateCategoryPut'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: UpdateCategoryBody
+          schema:
+            $ref: '#/definitions/models.Category'
+        "400":
+          description: Invalid Argumant
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: Update Category
+      tags:
+      - Category
+  /product:
+    get:
+      consumes:
+      - application/json
+      description: Get List product
+      operationId: ProductPrimeryKey
+      parameters:
+      - description: offset
+        in: query
+        name: offset
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: search
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: GetProdctListBody
+          schema:
+            $ref: '#/definitions/models.GetListProductResponse'
+        "400":
+          description: Invalid Argumant
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: Get List Product
+      tags:
+      - Product
+    post:
+      consumes:
+      - application/json
+      description: CreateProduct
+      operationId: CreateProduct
+      parameters:
+      - description: CreateProductRequestBody
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateProduct'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: GetProductBody
+          schema:
+            $ref: '#/definitions/models.CreateProduct'
+        "400":
+          description: Invalid Argumant
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: CreateProduct
+      tags:
+      - Product
+  /product/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Product
+      operationId: DeleteProduct
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: DeleteProductBody
+          schema:
+            $ref: '#/definitions/models.Empty'
+        "400":
+          description: Invalid Argumant
+          schema:
+            type: string
+        "500":
+          description: Server error
+          schema:
+            type: string
+      summary: Delete Product
+      tags:
+      - Product
+    get:
+      consumes:
+      - application/json
+      description: GetByID Product
+      operationId: Get_By_IDProduct
       parameters:
       - description: id
         in: path
@@ -186,9 +413,9 @@ paths:
       - application/json
       responses:
         "201":
-          description: GetByIDTovarBody
+          description: GetByIDProductBody
           schema:
-            $ref: '#/definitions/models.Tovar'
+            $ref: '#/definitions/models.Product'
         "400":
           description: Invalid Argumant
           schema:
@@ -197,33 +424,33 @@ paths:
           description: Server error
           schema:
             type: string
-      summary: GetByID Tovar
+      summary: GetByID Product
       tags:
-      - Tovar
+      - Product
     put:
       consumes:
       - application/json
-      description: Update Tovar
-      operationId: UpdateTovar
+      description: Update Product
+      operationId: UpdateProduct
       parameters:
       - description: id
         in: path
         name: id
         required: true
         type: string
-      - description: UpdateTovarRequestBody
+      - description: UpdateProductRequestBody
         in: body
-        name: tovar
+        name: product
         required: true
         schema:
-          $ref: '#/definitions/models.UpdateTovarSwag'
+          $ref: '#/definitions/models.UpdateProductPut'
       produces:
       - application/json
       responses:
         "202":
-          description: UpdateTovarBody
+          description: UpdateProductBody
           schema:
-            $ref: '#/definitions/models.Tovar'
+            $ref: '#/definitions/models.Product'
         "400":
           description: Invalid Argumant
           schema:
@@ -232,7 +459,7 @@ paths:
           description: Server error
           schema:
             type: string
-      summary: Update Tovar
+      summary: Update Product
       tags:
-      - Tovar
+      - Product
 swagger: "2.0"
