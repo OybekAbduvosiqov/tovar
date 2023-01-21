@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-
 	"github.com/OybekAbduvosiqov/tovar/models"
 
 	"github.com/google/uuid"
@@ -31,44 +30,47 @@ func (r *CategoryRepo) Insert(ctx context.Context, req *models.CreateCategory) (
 		fmt.Println(req.CategoryId)
 
 		query := `
-	INSERT INTO category (
-		id,
-		name,
-		photo,
-		updated_at
-	) VALUES ($1, $2, $3, now())
-`
+			INSERT INTO category (
+				id,
+				name,
+				photo,
+				branch_id,
+				updated_at
+			) VALUES ($1, $2, $3, $4, now())
+		`
 
 		_, err := r.db.Exec(ctx, query,
 			id,
 			req.Name,
 			req.Photo,
+			req.BranchId,
 		)
 
 		if err != nil {
 			return "", err
 		}
 		return id, nil
-
 	}
+
 	if req.CategoryId != "" {
-		fmt.Println(req.CategoryId)
 
 		query := `
-	INSERT INTO category (
-		id,
-		name,
-		photo,
-		type_id,
-		updated_at
-	) VALUES ($1, $2, $3, $4, now())
-`
+			INSERT INTO category (
+				id,
+				name,
+				photo,
+				type_id,
+				branch_id,
+				updated_at
+			) VALUES ($1, $2, $3, $4, $5, now())
+		`
 
 		_, err := r.db.Exec(ctx, query,
 			id,
 			req.Name,
 			req.Photo,
 			req.CategoryId,
+			req.BranchId,
 		)
 
 		if err != nil {
@@ -98,6 +100,7 @@ func (r *CategoryRepo) GetByID(ctx context.Context, req *models.CategoryPrimeryK
 from category as c
 where c.id = $1
 `
+
 	var (
 		id        sql.NullString
 		name      sql.NullString

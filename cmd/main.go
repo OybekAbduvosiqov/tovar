@@ -27,7 +27,7 @@ func main() {
 
 	r.Use(gin.Logger(), gin.Recovery())
 
-	api.NewApi(r, storage)
+	api.NewApi(r, cfg, storage)
 
 	err = r.Run(cfg.HTTPPort)
 	if err != nil {

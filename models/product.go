@@ -10,9 +10,11 @@ type Product struct {
 	Description string         `json:"description"`
 	Photo       string         `json:"photo"`
 	CategoryId  CategoryPrduct `json:"category_id"`
+	BranchId    string         `json:"branch_id"`
 	CreatedAt   string         `json:"created_at"`
 	UpdatedAt   string         `json:"updated_at"`
 }
+
 type Productlist struct {
 	Id          string  `json:"id"`
 	Name        string  `json:"name"`
@@ -28,6 +30,7 @@ type CreateProduct struct {
 	Price       float64 `json:"price"`
 	Description string  `json:"description"`
 	Photo       string  `json:"photo"`
+	BranchId    string  `json:"branch_id"`
 	CategoryId  string  `json:"category_id"`
 }
 
@@ -48,6 +51,7 @@ type UpdateProduct struct {
 	Description string  `json:"description"`
 	Photo       string  `json:"photo"`
 	CategoryId  string  `json:"category_id"`
+	BranchId    string  `json:"branch_id"`
 }
 type UpdateProductPut struct {
 	Name        string  `json:"name"`

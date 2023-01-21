@@ -34,8 +34,9 @@ func (r *ProductRepo) Insert(ctx context.Context, req *models.CreateProduct) (st
 		description,
 		photo,
 		category_id,
+		branch_id,
 		updated_at
-	) VALUES ($1, $2, $3, $4,$5,$6, now())
+	) VALUES ($1, $2, $3, $4, $5, $6, $7, now())
 `
 
 	_, err := r.db.Exec(ctx, query,
@@ -45,6 +46,7 @@ func (r *ProductRepo) Insert(ctx context.Context, req *models.CreateProduct) (st
 		req.Description,
 		req.Photo,
 		req.CategoryId,
+		req.BranchId,
 	)
 
 	if err != nil {
@@ -56,16 +58,17 @@ func (r *ProductRepo) Insert(ctx context.Context, req *models.CreateProduct) (st
 
 func (r *ProductRepo) GetByID(ctx context.Context, req *models.ProductPrimeryKey) (*models.Product, error) {
 
-	query := `select 
-			id,
-			name,
-			price,
-			description,
-			photo,
-			category_id,
-			updated_at
-	from product 
-	where id = $1
+	query := `
+		select 
+				id,
+				name,
+				price,
+				description,
+				photo,
+				category_id,
+				updated_at
+		from product 
+		where id = $1
 	`
 
 	queryCategory := `select 
